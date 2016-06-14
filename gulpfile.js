@@ -9,6 +9,7 @@ var gulp  = require('gulp'),
 var coffeeSources = ['components/coffee/tagline.coffee'];
 var jsFiles = 'components/scripts/*.js';
 var sassSources = ['components/sass/style.scss'];
+var htmlSources = ['builds/development/*.html'];
 
 gulp.task('coffee', function() {
     gulp.src(coffeeSources)
@@ -40,6 +41,7 @@ gulp.task('watch', function(){
     gulp.watch(coffeeSources, ['coffee']);
     gulp.watch(jsFiles, ['js']);
     gulp.watch('components/sass/*.scss', ['compass']);
+    gulp.watch(htmlSources, ['html']);
 });
 
 gulp.task('connect', function(){
@@ -49,5 +51,10 @@ gulp.task('connect', function(){
     });
 });
 
-gulp.task('default', ['coffee', 'js', 'compass', 'connect', 'watch']);
+gulp.task('html', function(){
+    gulp.src(htmlSources)
+        .pipe(connect.reload())
+});
+
+gulp.task('default', ['coffee', 'js', 'html', 'compass', 'connect', 'watch']);
 
